@@ -92,7 +92,8 @@ body {
 
 .faveBtn:hover {
     cursor: pointer;
-    background-color: #D3D3D3;
+    background-color: #edeef0;
+
 }
 
 #secondArea h3 {
@@ -124,6 +125,7 @@ ul::-webkit-scrollbar {
     list-style: none;
     margin: 5px;
     min-width: 145px;
+    max-width: 145px;
     min-height: 155px;
     padding: 10px;
     padding-top: 17px;
@@ -142,6 +144,14 @@ ul::-webkit-scrollbar {
     cursor: pointer;
    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 } 
+
+.bold {
+    font-size: 18px;
+}
+
+.favLocay p {
+    font-size: 15px;
+}
 
 
 /* #scrollArea {

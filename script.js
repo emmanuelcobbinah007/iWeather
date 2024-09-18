@@ -5,6 +5,7 @@
 let weatherData = [];
 const searchBtn = document.getElementById('searchBtn');
 const searchBar = document.getElementById('searchBar');
+const scrollArea = document.getElementById('scrollArea');
 let messageArea = document.getElementById('messageArea');
 
 document.addEventListener("DOMContentLoaded", fetchData);
@@ -63,6 +64,64 @@ function displaySearchResult () {
             let favBtn = document.createElement('span');
             favBtn.className = "fa-solid fa-star faveBtn";
 
+            // function to add favorites
+            favBtn.addEventListener('click', () => {
+                let li = document.createElement('li');
+                li.className = "favLocay";
+            
+                // close button
+                let iTag = document.createElement('i');
+                iTag.className = "fa-solid fa-xmark closeBtn";
+
+                iTag.addEventListener('click', (e) => {
+                    e.target.parentElement.remove();
+                })
+
+                // city
+                let h4 = document.createElement('h4');
+                h4.textContent = area.city;
+            
+                // temperature
+                let p = document.createElement('p');
+                p.textContent = `${area.temperature}°C`;
+
+                // quick tip
+
+                switch(area.weather_description) {
+                    case "Rain":
+                    case "Rain Showers":
+                    case "Rainy":
+                        iclass = "fa-solid fa-cloud-rain";
+                        tip2 = "Grab an umbrella <span>&#9730;</span>";
+                        break;
+                    case "Partly Cloudy": 
+                    case "Cloudy":
+                    case "Rainy":
+                        iclass = "fa-solid fa-cloud";
+                        tip2 = "You'd probably need a coat";
+                        break;
+                    default:
+                        iclass = "fa-solid fa-sun";
+                        tip2 = "Nothing to worry about";
+                }
+
+                let p2 = document.createElement('p');
+                p2.textContent = tip2;
+
+                // iTag
+                let itag = document.createElement('i');
+                itag.className = iclass;
+
+                
+                li.appendChild(iTag);
+                li.appendChild(h4);
+                li.appendChild(p);
+                li.appendChild(p2);
+                li.appendChild(itag);
+            
+                scrollArea.appendChild(li);
+            });
+
             messageArea.appendChild(iTag);
             messageArea.appendChild(message);
             messageArea.appendChild(favBtn);
@@ -71,8 +130,11 @@ function displaySearchResult () {
         } 
 
     })
+
+    searchBar.value = "";
 }
 
+// search function
 function search() {
     
     if(searchBar.value == "") {
@@ -89,24 +151,12 @@ function search() {
         if (messageArea.childElementCount == 0) {
             displaySearchResult();
 
-            searchBar.value = "";
         } 
         else {
             messageArea.innerHTML = "";
             displaySearchResult();
         }
     }
-
-    // console.log(weatherData);
-
-
-    // let comments = [];
-
-    // weatherData.forEach((area) => {
-    //     comments.push(area.weather_description);
-    //     });
-
-    // console.log(comments);
 
 }
 
