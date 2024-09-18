@@ -57,14 +57,14 @@ function displaySearchResult () {
             let iTag = document.createElement('i');
             iTag.className = iClass;
 
-            let message1 = document.createElement('p');
-            message1.textContent = `In ${area.city}, it's ${area.temperature}°C or ${(area.temperature * 9/5) + 32}°F. ${tip}`;
+            let message = document.createElement('p');
+            message.textContent = `In ${area.city}, it's ${area.temperature}°C or ${(area.temperature * 9/5) + 32}°F. ${tip}`;
 
             let favBtn = document.createElement('span');
             favBtn.className = "fa-solid fa-star faveBtn";
 
             messageArea.appendChild(iTag);
-            messageArea.appendChild(message1);
+            messageArea.appendChild(message);
             messageArea.appendChild(favBtn);
            
 
@@ -75,15 +75,29 @@ function displaySearchResult () {
 
 function search() {
     
-    if (messageArea.childElementCount == 0) {
-        displaySearchResult();
-    } 
-    else {
-        messageArea.innerHTML = "";
-        displaySearchResult();
+    if(searchBar.value == "") {
+        let message = document.createElement('p');
+        message.textContent = `Please fill in the field...`
+
+        messageArea.appendChild(message);
+
+        setTimeout(() => {
+            messageArea.textContent = "";
+        }, 3000);
+
+    } else {
+        if (messageArea.childElementCount == 0) {
+            displaySearchResult();
+
+            searchBar.value = "";
+        } 
+        else {
+            messageArea.innerHTML = "";
+            displaySearchResult();
+        }
     }
 
-    console.log(weatherData);
+    // console.log(weatherData);
 
 
     // let comments = [];
