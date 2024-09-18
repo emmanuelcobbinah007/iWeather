@@ -8,11 +8,12 @@ const searchBar = document.getElementById('searchBar');
 let messageArea = document.getElementById('messageArea');
 
 document.addEventListener("DOMContentLoaded", fetchData);
-
+// test function
 function test() {
     console.log('test was successful');
 }
 
+// function to fetch data
 async function fetchData() {
     let res = await fetch ('https://freetestapi.com/api/v1/weathers');
     let data = await res.json();
@@ -23,23 +24,76 @@ async function fetchData() {
     
 }
 
-console.log(weatherData);
-
 searchBtn.addEventListener('click', search);
 
-function search() {
+//function to display search results
+function displaySearchResult () {
     let searchValue = searchBar.value;
+
     weatherData.forEach((area) => {
         if(area.city == searchValue) {
-            console.log(area);
+            let tip;
+            let iClass;
+            console.log(area.weather_description);
 
-            let message = document.createElement('p');
-            message.textContent = `In ${area.city}, it's ${area.temperature}°C or ${(area.temperature * 9/5) + 32}°F`;
+            switch(area.weather_description) {
+                case "Rain":
+                case "Rain Showers":
+                case "Rainy":
+                    iClass = "fa-solid fa-cloud-rain icon";
+                    tip = "In English, it means grab an umbrella <span>&#9730;</span>";
+                    break;
+                case "Partly Cloudy": 
+                case "Cloudy":
+                case "Rainy":
+                    iClass = "fa-solid fa-cloud icon";
+                    tip = "I'd probably grab a coat if I were you.";
+                    break;
+                default:
+                    iClass = "fa-solid fa-sun icon";
+                    tip = "It's nothing serious, you're good to go!";
+            }
 
-            messageArea.appendChild(message);
+            let iTag = document.createElement('i');
+            iTag.className = iClass;
+
+            let message1 = document.createElement('p');
+            message1.textContent = `In ${area.city}, it's ${area.temperature}°C or ${(area.temperature * 9/5) + 32}°F. ${tip}`;
+
+            let favBtn = document.createElement('span');
+            favBtn.className = "fa-solid fa-star faveBtn";
+
+            messageArea.appendChild(iTag);
+            messageArea.appendChild(message1);
+            messageArea.appendChild(favBtn);
+           
 
         } 
+
     })
+}
+
+function search() {
+    
+    if (messageArea.childElementCount == 0) {
+        displaySearchResult();
+    } 
+    else {
+        messageArea.innerHTML = "";
+        displaySearchResult();
+    }
+
+    console.log(weatherData);
+
+
+    // let comments = [];
+
+    // weatherData.forEach((area) => {
+    //     comments.push(area.weather_description);
+    //     });
+
+    // console.log(comments);
+
 }
 
 

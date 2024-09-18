@@ -73,7 +73,7 @@ body {
     margin: 30px auto;
 }
 
-#messageArea i {
+.icon {
     font-size: 40px;
     color: #002765;
 }
@@ -83,9 +83,16 @@ body {
     line-height: 1.4rem;
 }
 
-#messageArea p span{
-    font-size: 25px;
+.faveBtn {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 50%;
     color: #002765;
+}
+
+.faveBtn:hover {
+    cursor: pointer;
+    background-color: #D3D3D3;
 }
 
 #secondArea h3 {
