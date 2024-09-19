@@ -9,10 +9,6 @@ const scrollArea = document.getElementById('scrollArea');
 let messageArea = document.getElementById('messageArea');
 
 document.addEventListener("DOMContentLoaded", fetchData);
-// test function
-function test() {
-    console.log('test was successful');
-}
 
 // function to fetch data
 async function fetchData() {
@@ -22,7 +18,8 @@ async function fetchData() {
     for(let i = 0; i < data.length; i++) {
         weatherData.push(data[i]);
     }
-    
+
+    displayData();
 }
 
 searchBtn.addEventListener('click', search);
@@ -35,7 +32,6 @@ function displaySearchResult () {
         if(area.city == searchValue) {
             let tip;
             let iClass;
-            console.log(area.weather_description);
 
             switch(area.weather_description) {
                 case "Rain":
@@ -75,6 +71,7 @@ function displaySearchResult () {
 
                 iTag.addEventListener('click', (e) => {
                     e.target.parentElement.remove();
+                    saveData();
                 })
 
                 // city
@@ -120,6 +117,8 @@ function displaySearchResult () {
                 li.appendChild(itag);
             
                 scrollArea.appendChild(li);
+
+                saveData();
             });
 
             messageArea.appendChild(iTag);
@@ -160,24 +159,21 @@ function search() {
 
 }
 
+//function to save data 
+function saveData() {
+    localStorage.setItem("data", scrollArea.innerHTML);
+}
 
+//function to get and display data 
+function displayData() {
+    scrollArea.innerHTML = localStorage.getItem("data");
 
+    scrollArea.addEventListener('click', function (e) {
+        if (e.target.classList.contains('closeBtn')) {
+            e.target.parentElement.remove(); 
+            saveData(); 
+        }
+    });
+}
 
-
-
-
-
-
-
-
-
-// let's take care of this after we are done with the basic concept
-// searchBar.addEventListener("input", search);
-
-
-// let mappedData = [];
-// weatherData.forEach((area) => {
-//     mappedData.push(area.city);
-// })
-
-// console.log(weatherData);
+displayData();
